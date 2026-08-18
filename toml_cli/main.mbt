@@ -6,11 +6,11 @@ let about : String =
   #|Parse, validate, and format TOML files.
   #|
   #|Run it from mooncakes.io without installing (the binary is fetched and
-  #|cached on first use; pin a version with bobzhang/toml_cli@<version>):
+  #|cached on first use; pin a version with moonbit-community/toml_cli@<version>):
   #|
-  #|  moonx bobzhang/toml_cli check config.toml
-  #|  moonx bobzhang/toml_cli format config.toml
-  #|  moonx bobzhang/toml_cli tojson config.toml
+  #|  moonx moonbit-community/toml_cli check config.toml
+  #|  moonx moonbit-community/toml_cli format config.toml
+  #|  moonx moonbit-community/toml_cli tojson config.toml
   #|
   #|Exit codes:
   #|  0  success

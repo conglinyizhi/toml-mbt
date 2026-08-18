@@ -21,11 +21,11 @@ Usage: toml_cli [file] [command]
 Parse, validate, and format TOML files.
 
 Run it from mooncakes.io without installing (the binary is fetched and
-cached on first use; pin a version with bobzhang/toml_cli@<version>):
+cached on first use; pin a version with moonbit-community/toml_cli@<version>):
 
-  moonx bobzhang/toml_cli check config.toml
-  moonx bobzhang/toml_cli format config.toml
-  moonx bobzhang/toml_cli tojson config.toml
+  moonx moonbit-community/toml_cli check config.toml
+  moonx moonbit-community/toml_cli format config.toml
+  moonx moonbit-community/toml_cli tojson config.toml
 
 Exit codes:
   0  success
@@ -58,11 +58,11 @@ Usage: toml_cli [file] [command]
 Parse, validate, and format TOML files.
 
 Run it from mooncakes.io without installing (the binary is fetched and
-cached on first use; pin a version with bobzhang/toml_cli@<version>):
+cached on first use; pin a version with moonbit-community/toml_cli@<version>):
 
-  moonx bobzhang/toml_cli check config.toml
-  moonx bobzhang/toml_cli format config.toml
-  moonx bobzhang/toml_cli tojson config.toml
+  moonx moonbit-community/toml_cli check config.toml
+  moonx moonbit-community/toml_cli format config.toml
+  moonx moonbit-community/toml_cli tojson config.toml
 
 Exit codes:
   0  success
@@ -157,6 +157,6 @@ $ cat > invalid.toml <<'EOF'
 > key =
 > EOF
 > toml_cli.exe check invalid.toml
-error: failed to parse invalid.toml: Failure(parser.mbt:*@bobzhang/toml FAILED: Expected value at { start: { line: 1, column: 6 }, end: { line: 2, column: 1 } }) (glob)
+error: failed to parse invalid.toml: Failure(parser.mbt:*@moonbit-community/toml FAILED: Expected value at { start: { line: 1, column: 6 }, end: { line: 2, column: 1 } }) (glob)
 [1]
 ```

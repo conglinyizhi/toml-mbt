@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "bobzhang/toml/internal/tokenize"
+package "moonbit-community/toml/internal/tokenize"
 
 import {
   "bobzhang/lexer",
-  "bobzhang/toml/datetime",
+  "moonbit-community/toml/datetime",
   "moonbitlang/core/debug",
 }
 

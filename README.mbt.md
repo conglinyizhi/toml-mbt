@@ -62,7 +62,7 @@ A lightweight and efficient TOML parser written in MoonBit with TOML 1.1 support
 Add this parser to your MoonBit project:
 
 ```bash
-moon add bobzhang/toml
+moon add moonbit-community/toml
 ```
 
 Then add it directly to your `moon.mod`:
@@ -70,22 +70,22 @@ Then add it directly to your `moon.mod`:
 ```moonbit nocheck
 ///|
 import {
-  "bobzhang/toml@0.4.3",
+  "moonbit-community/toml@0.4.3",
 }
 ```
 
 ## Command-Line Usage
 
-The companion `bobzhang/toml_cli` module (in `toml_cli/` in this repository)
+The companion `moonbit-community/toml_cli` module (in `toml_cli/` in this repository)
 provides a CLI for validating and normalizing TOML files. Run the published
 prebuilt binary directly, no installation needed (arguments are passed
 straight through, no `--` separator):
 
 ```bash
-moonx bobzhang/toml_cli --help
-moonx bobzhang/toml_cli check config.toml
-moonx bobzhang/toml_cli format config.toml
-moonx bobzhang/toml_cli tojson config.toml
+moonx moonbit-community/toml_cli --help
+moonx moonbit-community/toml_cli check config.toml
+moonx moonbit-community/toml_cli format config.toml
+moonx moonbit-community/toml_cli tojson config.toml
 ```
 
 Or run it from source in this repository:
@@ -579,7 +579,7 @@ toml-parser/
 - **Core Parser** (`toml.mbt`, `parser.mbt`) - Main TOML parsing implementation with full TOML 1.0 specification support, recursive descent parser with error recovery
 - **Tokenizer** (`internal/tokenize/`) - Lexical analysis and tokenization engine supporting all TOML tokens including special float values (inf, nan)
 - **Utilities** (`toml_utils.mbt`) - Helper functions for table creation, dotted key handling, and nested structure management
-- **CLI Application** (`toml_cli/`, published as `bobzhang/toml_cli`) - Command-line validation and formatting for TOML files
+- **CLI Application** (`toml_cli/`, published as `moonbit-community/toml_cli`) - Command-line validation and formatting for TOML files
 - **Comprehensive Test Suite** (8000+ lines) - Extensive coverage including:
   - Unit tests for all data types and features
   - Official TOML specification compliance tests

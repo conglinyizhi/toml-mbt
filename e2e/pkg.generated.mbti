@@ -1,8 +1,8 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "bobzhang/toml-e2e"
+package "moonbit-community/toml-e2e"
 
 import {
-  "bobzhang/toml",
+  "moonbit-community/toml",
   "moonbitlang/x/fs",
 }
 

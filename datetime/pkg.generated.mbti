@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "bobzhang/toml/datetime"
+package "moonbit-community/toml/datetime"
 
 import {
   "moonbitlang/core/debug",

@@ -1,6 +1,6 @@
 import {
-  "bobzhang/toml/datetime",
-  "bobzhang/toml/internal/tokenize",
+  "moonbit-community/toml/datetime",
+  "moonbit-community/toml/internal/tokenize",
   "moonbitlang/core/debug",
   "moonbitlang/core/string",
 }

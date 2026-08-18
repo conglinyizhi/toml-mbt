@@ -3,7 +3,7 @@
 ## The problem we hit
 
 The `e2e/` directory is a nested module — its `moon.mod` declares
-`name = "bobzhang/toml-e2e"`. When code in this package uses a symbol
+`name = "moonbit-community/toml-e2e"`. When code in this package uses a symbol
 unqualified in tests, the compiler emits:
 
 ```
@@ -17,7 +17,7 @@ That suggestion is wrong in two ways:
    in `toml-e2e` makes it parse as `@toml` minus `e2e.collect_toml_files`.
    The compiler proposes a fix that the compiler itself would reject.
 2. It ignores the alias actually in scope. `e2e/moon.pkg` declares
-   `"bobzhang/toml-e2e" @e2e`, so the correct qualification is
+   `"moonbit-community/toml-e2e" @e2e`, so the correct qualification is
    `@e2e.collect_toml_files`. The diagnostic should know that.
 
 ## Why it confuses
@@ -27,7 +27,7 @@ There's a triple mismatch sitting on top:
 | What                                  | Value                  |
 | ------------------------------------- | ---------------------- |
 | Directory                             | `e2e/`                 |
-| Module name (`e2e/moon.mod`)          | `bobzhang/toml-e2e`    |
+| Module name (`e2e/moon.mod`)          | `moonbit-community/toml-e2e`    |
 | Default-derived alias (last segment)  | `toml-e2e` (invalid)   |
 | Actual alias in `moon.pkg`            | `@e2e`                 |
 
@@ -43,13 +43,13 @@ See `MEMORY.md` entry [moon.pkg alias syntax] for the workaround.
 1. **Fix the warning message.** When emitting
    `test_unqualified_package`, look up the importing package's alias
    table and quote the actual alias:
-   > `` `collect_toml_files` from `bobzhang/toml-e2e` (imported as
+   > `` `collect_toml_files` from `moonbit-community/toml-e2e` (imported as
    > `@e2e`). Qualify it as `@e2e.collect_toml_files`. ``
    If no alias exists and the last segment is not a valid identifier,
    say so explicitly instead of inventing `@toml-e2e`.
 
 2. **Reject dashed default-aliased imports at `moon.pkg` parse time.**
-   `import { "bobzhang/toml-e2e" }` (no alias) should fail at the
+   `import { "moonbit-community/toml-e2e" }` (no alias) should fail at the
    `moon.pkg` load site with a diagnostic pointing at the import line
    and the exact patched line to use.
 
@@ -69,10 +69,10 @@ It is tempting to add a lint that fires when a nested `moon.mod`'s
 `name` does not match the directory it lives in. Don't — too many
 legitimate cases break it:
 
-- **Root checkout.** A module is `bobzhang/toml` but I clone it into
+- **Root checkout.** A module is `moonbit-community/toml` but I clone it into
   `toml-parser/` or `~/work/foo/`. The root `moon.mod` has no control
   over the checkout dir.
-- **Workspace-style sub-modules.** A `bobzhang/toml-cli` module sitting
+- **Workspace-style sub-modules.** A `moonbit-community/toml-cli` module sitting
   in `cli/` next to `parser/` is clearer than `cli/toml-cli/`.
 - **Vendoring.** `vendor/toml-e2e/` is a fine layout.
 - **Tests-as-a-module.** `e2e/` is a more readable dirname than
@@ -94,7 +94,7 @@ default — but never on as policy.
 
 Either rename brings dir, module name, and alias back into agreement:
 
-- **Rename the nested module** to `bobzhang/toml/e2e` (or `bobzhang/e2e`)
+- **Rename the nested module** to `moonbit-community/toml/e2e` (or `bobzhang/e2e`)
   so the last segment matches the dirname and no alias is needed.
 - **Rename the directory** to `toml-e2e/` so dir and module agree (the
   `@e2e` alias is still needed because of the dash, but at least

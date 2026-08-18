@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "bobzhang/toml/internal/qc_model"
+package "moonbit-community/toml/internal/qc_model"
 
 import {
-  "bobzhang/toml",
-  "bobzhang/toml/datetime",
+  "moonbit-community/toml",
+  "moonbit-community/toml/datetime",
   "moonbitlang/core/debug",
   "moonbitlang/core/quickcheck",
   "moonbitlang/core/quickcheck/shrink",
