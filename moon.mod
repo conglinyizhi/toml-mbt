@@ -1,4 +1,4 @@
-name = "bobzhang/toml"
+name = "moonbit-community/toml"
 
 version = "0.4.3"
 
