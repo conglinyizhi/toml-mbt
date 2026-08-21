@@ -1,5 +1,5 @@
 ///|
-let version : String = "0.3.2"
+let version : String = "0.3.3"
 
 ///|
 let about : String =
@@ -89,9 +89,9 @@ fn toml_command() -> @argparse.Command {
 
 ///|
 fn main {
-  let code = run(@env.args()[1:])
+  let code = run(get_args()[1:])
   if code != 0 {
-    @sys.exit(code)
+    exit(code)
   }
 }
 
@@ -122,15 +122,11 @@ fn dispatch_source(
   action : (String, String) -> Int,
 ) -> Int {
   match matches.values.get("file") {
-    Some([path]) if path != "-" => {
-      let source = @fs.read_file_to_string(path) catch {
-        err => {
-          println("error: failed to read \{path}: \{err}")
-          return 1
-        }
+    Some([path]) if path != "-" =>
+      match read_source_file(path) {
+        Some(source) => action(source, path)
+        None => 1
       }
-      action(source, path)
-    }
     _ => action(read_stdin(), "-")
   }
 }
@@ -142,15 +138,11 @@ fn dispatch_get(matches : @argparse.Matches) -> Int {
     _ => return 2
   }
   match matches.values.get("file") {
-    Some([file]) if file != "-" => {
-      let source = @fs.read_file_to_string(file) catch {
-        err => {
-          println("error: failed to read \{file}: \{err}")
-          return 1
-        }
+    Some([file]) if file != "-" =>
+      match read_source_file(file) {
+        Some(source) => get_source(source, path)
+        None => 1
       }
-      get_source(source, path)
-    }
     _ => get_source(read_stdin(), path)
   }
 }

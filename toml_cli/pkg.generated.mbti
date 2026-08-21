@@ -6,20 +6,32 @@ import {
 }
 
 // Values
+pub fn bytes2ptr(Bytes) -> Int
+
+pub fn exit(Int) -> Unit
+
+pub fn free(Int) -> Unit
+
+pub fn get_args() -> Array[String]
+
 pub fn get_path(@toml.TomlValue, String) -> @toml.TomlValue?
+
+pub fn load32(Int) -> Int
+
+pub fn malloc(Int) -> Int
+
+pub fn read_source_file(String) -> String?
 
 pub fn read_stdin() -> String
 
 pub fn render(@toml.TomlValue) -> String
 
+pub fn store32(Int, Int) -> Unit
+
 // Errors
 
 // Types and methods
 type PathSeg
-
-type XByteArrayReadHandle
-
-type XExternByteArray
 
 // Type aliases
 

@@ -11,8 +11,8 @@ from standard input, so it composes in pipelines.
 ## Usage
 
 ```bash
-moon runwasm conglinyizhi/toml-cli@0.3.2 check config.toml   # validate a file
-moon runwasm conglinyizhi/toml-cli@0.3.2 get .server.host config.toml
+moon runwasm conglinyizhi/toml-cli@0.3.3 check config.toml   # validate a file
+moon runwasm conglinyizhi/toml-cli@0.3.3 get .server.host config.toml
 cat config.toml | moon runwasm conglinyizhi/toml-cli get .ports[0]
 echo 'a = 1' | moon runwasm conglinyizhi/toml-cli check
 moon runwasm conglinyizhi/toml-cli tojson config.toml

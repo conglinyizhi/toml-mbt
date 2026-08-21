@@ -1,6 +1,6 @@
 name = "conglinyizhi/toml-cli"
 
-version = "0.3.2"
+version = "0.3.3"
 
 preferred_target = "wasm"
 
@@ -18,3 +18,5 @@ license = "Apache-2.0"
 keywords = [ "toml", "cli", "formatter", "validator" ]
 
 description = "Command-line tool to parse, validate, and format TOML files"
+
+warnings = "-unused_package"

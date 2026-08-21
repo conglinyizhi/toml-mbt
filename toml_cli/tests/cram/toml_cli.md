@@ -11,7 +11,7 @@ moon cram test --release tests/cram
 
 ```mooncram
 $ toml-cli.exe --version
-0.3.2
+0.3.3
 ```
 
 ```mooncram
