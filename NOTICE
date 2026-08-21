@@ -1,0 +1,10 @@
+MoonBit TOML Parser (Nightly-Compatible Fork)
+
+This project is derived from moonbit-community/toml-parser:
+https://github.com/moonbit-community/toml-parser
+
+Fork base: upstream commit 27897de
+Original module: moonbit-community/toml@0.4.3
+
+The upstream project and this derivative are distributed under the
+Apache License, Version 2.0. The complete license text is in LICENSE.

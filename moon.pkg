@@ -1,6 +1,6 @@
 import {
-  "moonbit-community/toml/datetime",
-  "moonbit-community/toml/internal/tokenize",
+  "conglinyizhi/toml/datetime",
+  "conglinyizhi/toml/internal/tokenize",
   "moonbitlang/core/debug",
   "moonbitlang/core/string",
 }

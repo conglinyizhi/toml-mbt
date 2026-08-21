@@ -1,5 +1,5 @@
 import {
-  "moonbit-community/toml" @toml_lib,
+  "conglinyizhi/toml" @toml_lib,
   "moonbitlang/core/argparse",
   "moonbitlang/core/env",
   "moonbitlang/x/fs",

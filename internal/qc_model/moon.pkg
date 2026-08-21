@@ -1,6 +1,6 @@
 import {
-  "moonbit-community/toml",
-  "moonbit-community/toml/datetime",
+  "conglinyizhi/toml",
+  "conglinyizhi/toml/datetime",
   "moonbitlang/core/quickcheck" @qc,
   "moonbitlang/core/quickcheck/shrink",
 }

@@ -1,8 +1,8 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/toml"
+package "conglinyizhi/toml"
 
 import {
-  "moonbit-community/toml/datetime",
+  "conglinyizhi/toml/datetime",
   "moonbitlang/core/debug",
 }
 

@@ -1,12 +1,12 @@
 import {
   "moonbitlang/x/fs",
-  "moonbit-community/toml",
+  "conglinyizhi/toml",
   "moonbitlang/core/json",
   "moonbitlang/core/encoding/utf8",
   "moonbitlang/core/string",
 }
 
 import {
-  "moonbit-community/toml-e2e" @e2e,
+  "conglinyizhi/toml-e2e" @e2e,
   "moonbitlang/async",
 } for "test"

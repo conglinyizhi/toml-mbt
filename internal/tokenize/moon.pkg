@@ -1,5 +1,5 @@
 import {
   "bobzhang/lexer",
-  "moonbit-community/toml/datetime",
+  "conglinyizhi/toml/datetime",
   "moonbitlang/core/string",
 }

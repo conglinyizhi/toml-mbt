@@ -1,9 +1,9 @@
-name = "moonbit-community/toml_cli"
+name = "conglinyizhi/toml-cli"
 
 version = "0.2.0"
 
 import {
-  "moonbit-community/toml@0.4.2",
+  "conglinyizhi/toml@0.1.0",
   "moonbitlang/x@0.4.41",
 }
 

@@ -1,4 +1,11 @@
-# TOML Parser for MoonBit
+# MoonBit TOML Parser (Nightly-Compatible Fork)
+
+This module is a local maintenance fork of
+[`moonbit-community/toml-parser`](https://github.com/moonbit-community/toml-parser),
+based on upstream commit `27897de`. It exists while the compatible upstream
+`0.4.3` release is not yet available from the MoonBit package registry.
+
+The source remains under Apache-2.0. See [`NOTICE`](NOTICE) for attribution.
 
 A lightweight and efficient TOML parser written in MoonBit with TOML 1.1 support and **98.8% compliance** against the official [toml-test](https://github.com/toml-lang/toml-test) suite (736/745 tests pass, 262/262 valid tests at 100%).
 
@@ -62,7 +69,7 @@ A lightweight and efficient TOML parser written in MoonBit with TOML 1.1 support
 Add this parser to your MoonBit project:
 
 ```bash
-moon add moonbit-community/toml
+moon add conglinyizhi/toml
 ```
 
 Then add it directly to your `moon.mod`:
@@ -70,7 +77,7 @@ Then add it directly to your `moon.mod`:
 ```moonbit nocheck
 ///|
 import {
-  "moonbit-community/toml@0.4.3",
+  "conglinyizhi/toml@0.1.0",
 }
 ```
 
