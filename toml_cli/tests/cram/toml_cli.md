@@ -1,7 +1,7 @@
 # TOML CLI Cram Tests
 
 These Moon Cram tests document the native `toml` executable. `moon cram` builds
-the native CLI and puts `toml_cli.exe` on `PATH`:
+the native CLI and puts `toml-cli.exe` on `PATH`:
 
 ```bash
 moon cram test --release tests/cram
@@ -10,12 +10,12 @@ moon cram test --release tests/cram
 ## Help And Version
 
 ```mooncram
-$ toml_cli.exe --version
+$ toml-cli.exe --version
 0.2.0
 ```
 
 ```mooncram
-$ toml_cli.exe --help
+$ toml-cli.exe --help
 Usage: toml_cli [file] [command]
 
 Parse, validate, and format TOML files.
@@ -52,7 +52,7 @@ Options:
 ```
 
 ```mooncram
-$ toml_cli.exe
+$ toml-cli.exe
 Usage: toml_cli [file] [command]
 
 Parse, validate, and format TOML files.
@@ -97,7 +97,7 @@ $ cat > sample.toml <<'EOF'
 > [server]
 > enabled = true
 > EOF
-> toml_cli.exe format sample.toml
+> toml-cli.exe format sample.toml
 title = "MoonBit"
 
 ports = [8000, 8001]
@@ -114,7 +114,7 @@ $ cat > valid.toml <<'EOF'
 > package = "toml"
 > version = "0.2.3"
 > EOF
-> toml_cli.exe check valid.toml
+> toml-cli.exe check valid.toml
 valid.toml: OK
 ```
 
@@ -134,7 +134,7 @@ $ cat > convert.toml <<'EOF'
 > [server]
 > enabled = true
 > EOF
-> toml_cli.exe tojson convert.toml
+> toml-cli.exe tojson convert.toml
 {
   "title": "MoonBit",
   "ports": [
@@ -156,7 +156,7 @@ $ cat > convert.toml <<'EOF'
 $ cat > invalid.toml <<'EOF'
 > key =
 > EOF
-> toml_cli.exe check invalid.toml
-error: failed to parse invalid.toml: Failure(parser.mbt:*@moonbit-community/toml FAILED: Expected value at { start: { line: 1, column: 6 }, end: { line: 2, column: 1 } }) (glob)
+> toml-cli.exe check invalid.toml
+error: failed to parse invalid.toml: Failure(parser.mbt:*@conglinyizhi/toml FAILED: Expected value at { start: { line: 1, column: 6 }, end: { line: 2, column: 1 } }) (glob)
 [1]
 ```
