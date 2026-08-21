@@ -1,11 +1,25 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "conglinyizhi/toml-cli"
 
+import {
+  "conglinyizhi/toml",
+}
+
 // Values
+pub fn get_path(@toml.TomlValue, String) -> @toml.TomlValue?
+
+pub fn read_stdin() -> String
+
+pub fn render(@toml.TomlValue) -> String
 
 // Errors
 
 // Types and methods
+type PathSeg
+
+type XByteArrayReadHandle
+
+type XExternByteArray
 
 // Type aliases
 

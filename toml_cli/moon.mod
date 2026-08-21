@@ -1,6 +1,6 @@
 name = "conglinyizhi/toml-cli"
 
-version = "0.2.0"
+version = "0.3.0"
 
 import {
   "conglinyizhi/toml@0.1.0",
@@ -9,7 +9,7 @@ import {
 
 readme = "README.md"
 
-repository = "https://github.com/moonbit-community/toml-parser"
+repository = "https://github.com/conglinyizhi/toml-mbt"
 
 license = "Apache-2.0"
 

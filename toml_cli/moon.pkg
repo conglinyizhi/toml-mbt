@@ -2,8 +2,18 @@ import {
   "conglinyizhi/toml" @toml_lib,
   "moonbitlang/core/argparse",
   "moonbitlang/core/env",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/string",
   "moonbitlang/x/fs",
   "moonbitlang/x/sys",
 }
 
 pkgtype(kind: "executable")
+
+options(
+  "native-stub": [ "stdin_native.c" ],
+  targets: {
+    "stdin_native.mbt": [ "native", "llvm" ],
+    "stdin_wasm.mbt": [ "wasm", "wasm-gc" ],
+  },
+)

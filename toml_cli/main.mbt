@@ -1,9 +1,15 @@
 ///|
-let version : String = "0.2.0"
+let version : String = "0.3.0"
 
 ///|
 let about : String =
-  #|Parse, validate, and format TOML files.
+  #|Parse, validate, query, and format TOML files.
+  #|
+  #|Every command reads from a file argument when given, and from standard
+  #|input otherwise, so it composes in pipelines like `jq`:
+  #|
+  #|  cat config.toml | toml_cli get .server.host
+  #|  echo 'a = 1' | toml_cli check
   #|
   #|Run it from mooncakes.io without installing (the binary is fetched and
   #|cached on first use; pin a version with moonbit-community/toml_cli@<version>):
@@ -11,16 +17,20 @@ let about : String =
   #|  moonx moonbit-community/toml_cli check config.toml
   #|  moonx moonbit-community/toml_cli format config.toml
   #|  moonx moonbit-community/toml_cli tojson config.toml
+  #|  moonx moonbit-community/toml_cli get .server.host config.toml
   #|
   #|Exit codes:
   #|  0  success
-  #|  1  the file could not be read or is not valid TOML; a human-readable
-  #|     error with position information is printed to stdout
-  #|  2  usage error (unknown subcommand or missing file argument)
+  #|  1  the input could not be read or is not valid TOML, or the queried
+  #|     path does not exist; a human-readable error is printed to stdout
+  #|  2  usage error (unknown subcommand or missing required argument)
   #|
   #|`format` prints the normalized document to stdout; it never rewrites the
   #|input file. To format in place, redirect stdout to a temporary file and
   #|move it over the original after checking the exit code.
+  #|
+  #|`get` prints the value at a dotted path (e.g. `.server.host`, `.ports[0]`);
+  #|strings are printed raw, other values in TOML form.
 
 ///|
 fn toml_command() -> @argparse.Command {
@@ -28,32 +38,51 @@ fn toml_command() -> @argparse.Command {
     "toml_cli",
     about~,
     version~,
-    arg_required_else_help=true,
     positionals=[
-      PositionArg("file", about="Parse TOML and print normalized TOML."),
+      PositionArg(
+        "file",
+        about="Parse TOML and print normalized TOML (default: read stdin).",
+        num_args=@argparse.ValueRange(lower=0, upper=1),
+      ),
     ],
     subcommands=[
       Command("format", about="Parse TOML and print normalized TOML.", positionals=[
         PositionArg(
           "file",
-          about="TOML file to format.",
-          num_args=@argparse.ValueRange::single(),
+          about="TOML file to format (default: read stdin).",
+          num_args=@argparse.ValueRange(lower=0, upper=1),
         ),
       ]),
       Command("check", about="Validate TOML without printing parsed output.", positionals=[
         PositionArg(
           "file",
-          about="TOML file to validate.",
-          num_args=@argparse.ValueRange::single(),
+          about="TOML file to validate (default: read stdin).",
+          num_args=@argparse.ValueRange(lower=0, upper=1),
         ),
       ]),
       Command("tojson", about="Parse TOML and print it as JSON.", positionals=[
         PositionArg(
           "file",
-          about="TOML file to convert.",
-          num_args=@argparse.ValueRange::single(),
+          about="TOML file to convert (default: read stdin).",
+          num_args=@argparse.ValueRange(lower=0, upper=1),
         ),
       ]),
+      Command(
+        "get",
+        about="Print the value at a dotted path, e.g. .server.host.",
+        positionals=[
+          PositionArg(
+            "path",
+            about="Path expression, e.g. .server.host or .ports[0].",
+            num_args=@argparse.ValueRange::single(),
+          ),
+          PositionArg(
+            "file",
+            about="TOML file to read (default: read stdin).",
+            num_args=@argparse.ValueRange(lower=0, upper=1),
+          ),
+        ],
+      ),
     ],
   )
 }
@@ -75,57 +104,109 @@ fn run(args : ArrayView[String]) -> Int {
     }
   }
   match matches.subcommand {
-    Some(("format", child)) => dispatch_file(child, format_file)
-    Some(("check", child)) => dispatch_file(child, check_file)
-    Some(("tojson", child)) => dispatch_file(child, tojson_file)
+    Some(("format", child)) => dispatch_source(child, format_source)
+    Some(("check", child)) => dispatch_source(child, check_source)
+    Some(("tojson", child)) => dispatch_source(child, tojson_source)
+    Some(("get", child)) => dispatch_get(child)
     Some((name, _)) => {
       println("error: unsupported command `\{name}`")
       2
     }
-    None => dispatch_file(matches, format_file)
+    None => dispatch_source(matches, format_source)
   }
 }
 
 ///|
-fn dispatch_file(matches : @argparse.Matches, action : (String) -> Int) -> Int {
+fn dispatch_source(
+  matches : @argparse.Matches,
+  action : (String, String) -> Int,
+) -> Int {
   match matches.values.get("file") {
-    Some([path]) => action(path)
-    _ => 2
+    Some([path]) if path != "-" => {
+      let source = @fs.read_file_to_string(path) catch {
+        err => {
+          println("error: failed to read \{path}: \{err}")
+          return 1
+        }
+      }
+      action(source, path)
+    }
+    _ => action(read_stdin(), "-")
   }
 }
 
 ///|
-fn format_file(path : String) -> Int {
-  let source = @fs.read_file_to_string(path) catch {
-    err => {
-      println("error: failed to read \{path}: \{err}")
-      return 1
-    }
+fn dispatch_get(matches : @argparse.Matches) -> Int {
+  let path = match matches.values.get("path") {
+    Some([p]) => p
+    _ => return 2
   }
+  match matches.values.get("file") {
+    Some([file]) if file != "-" => {
+      let source = @fs.read_file_to_string(file) catch {
+        err => {
+          println("error: failed to read \{file}: \{err}")
+          return 1
+        }
+      }
+      get_source(source, path)
+    }
+    _ => get_source(read_stdin(), path)
+  }
+}
+
+///|
+fn fail_parse(label : String, err : Error) -> Int {
+  let source = if label == "-" { "input" } else { label }
+  println("error: failed to parse \{source}: \{err}")
+  1
+}
+
+///|
+fn get_source(source : String, path : String) -> Int {
   let value = @toml_lib.parse(source) catch {
     err => {
-      println("error: failed to parse \{path}: \{err}")
+      println("error: failed to parse input: \{err}")
       return 1
     }
   }
-  println(value.to_string())
+  match get_path(value, path) {
+    Some(result) => {
+      println(render(result))
+      0
+    }
+    None => {
+      println("error: no value at path `\{path}`")
+      1
+    }
+  }
+}
+
+///|
+fn format_source(source : String, label : String) -> Int {
+  let value = @toml_lib.parse(source) catch {
+    err => return fail_parse(label, err)
+  }
+  println(value.to_string().trim_end().to_owned())
   0
 }
 
 ///|
-fn check_file(path : String) -> Int {
-  let source = @fs.read_file_to_string(path) catch {
-    err => {
-      println("error: failed to read \{path}: \{err}")
-      return 1
-    }
+fn check_source(source : String, label : String) -> Int {
+  let _ = @toml_lib.parse(source) catch { err => return fail_parse(label, err) }
+  if label == "-" {
+    println("OK")
+  } else {
+    println("\{label}: OK")
   }
-  let _ = @toml_lib.parse(source) catch {
-    err => {
-      println("error: failed to parse \{path}: \{err}")
-      return 1
-    }
+  0
+}
+
+///|
+fn tojson_source(source : String, label : String) -> Int {
+  let value = @toml_lib.parse(source) catch {
+    err => return fail_parse(label, err)
   }
-  println("\{path}: OK")
+  println(to_json(value).stringify(indent=2))
   0
 }

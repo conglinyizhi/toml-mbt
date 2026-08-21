@@ -26,21 +26,3 @@ fn to_json(value : @toml_lib.TomlValue) -> Json {
       Json::object(Map::from_array([ for k, v in table => (k, to_json(v)) ]))
   }
 }
-
-///|
-fn tojson_file(path : String) -> Int {
-  let source = @fs.read_file_to_string(path) catch {
-    err => {
-      println("error: failed to read \{path}: \{err}")
-      return 1
-    }
-  }
-  let value = @toml_lib.parse(source) catch {
-    err => {
-      println("error: failed to parse \{path}: \{err}")
-      return 1
-    }
-  }
-  println(to_json(value).stringify(indent=2))
-  0
-}
