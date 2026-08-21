@@ -1,6 +1,6 @@
 name = "conglinyizhi/toml-cli"
 
-version = "0.3.0"
+version = "0.3.1"
 
 import {
   "conglinyizhi/toml@0.1.0",
