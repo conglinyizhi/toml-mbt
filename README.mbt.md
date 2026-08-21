@@ -7,6 +7,17 @@ based on upstream commit `27897de`. It exists while the compatible upstream
 
 The source remains under Apache-2.0. See [`NOTICE`](NOTICE) for attribution.
 
+## Nightly Compatibility
+
+This fork is verified with the following MoonBit nightly toolchain:
+
+- `moon 0.1.20260820` (`9e8a5d3`, 2026-08-20)
+- `moonc v0.10.9+717497b44-nightly` (2026-08-19)
+
+The checkout passes all 411 MoonBit tests on both `wasm` and `native` targets
+with this toolchain. Compatibility with other nightly revisions is not
+implied; use this recorded version as the reproducible baseline.
+
 A lightweight and efficient TOML parser written in MoonBit with TOML 1.1 support and **98.8% compliance** against the official [toml-test](https://github.com/toml-lang/toml-test) suite (736/745 tests pass, 262/262 valid tests at 100%).
 
 ## Features

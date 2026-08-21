@@ -1631,7 +1631,7 @@ test "test hex overflow edge case" {
       value => Ok(value)
     },
     content=(
-      #|Err(Failure("internal/tokenize/tokenize.mbt:559:7-559:71@moonbit-community/toml FAILED: Invalid hex number: value out of Int64 range at line 1, column 7"))
+      #|Err(Failure("internal/tokenize/tokenize.mbt:559:7-559:71@conglinyizhi/toml FAILED: Invalid hex number: value out of Int64 range at line 1, column 7"))
     ),
   )
 }
