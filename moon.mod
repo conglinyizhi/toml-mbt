@@ -8,6 +8,8 @@ import {
 
 readme = "README.md"
 
+repository = "https://github.com/conglinyizhi/toml-mbt"
+
 license = "Apache-2.0"
 
 keywords = [ "toml", "parser", "config" ]
